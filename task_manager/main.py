@@ -1,4 +1,5 @@
 import json
+import time
 from typing import Tuple
 
 import aioredis
@@ -68,7 +69,7 @@ async def process_help_command(msg: types.Message):
 @dp.message_handler()
 async def echo_message(msg: types.Message):
     redis = await aioredis.from_url(
-        REDIS_URL, username=REDIS_USERNAME, password=REDIS_PASSWORD
+        REDIS_URL, username=REDIS_USERNAME, password=REDIS_PASSWORD, db=0
     )
     conn = await get_db_conn()
 
@@ -81,16 +82,16 @@ async def echo_message(msg: types.Message):
         cel_pk, text = get_data_from_message(msg.text)
         message = Message(title=text, user_pk=user_pk, celebrity_pk=cel_pk)
         await msgs_repo.create(message)
-        await redis.set(f'{user_pk}_{msg.date}', json.dumps({'user_pk': user_pk, 'text': text, 'cel_pk': cel_pk}))
-        await bot.send_message(msg.from_user.id, msg.text)
+        await redis.set(f'{user_pk}_{int(time.time())}', json.dumps({'user_pk': user_pk, 'text': text, 'cel_pk': cel_pk}))
+        await bot.send_message(msg.from_user.id, str(int(time.time())))
     except DbFkError:
         logger.debug('Error in celebrity fk key')
     except Exception as e:
         logger.error(e)
     finally:
         await conn.close()
-        redis.close()
-        await redis.wait_closed()
+        await redis.close()
+        # await redis.wait_closed()
 
 
 if __name__ == '__main__':
