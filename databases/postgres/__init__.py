@@ -1,5 +1,4 @@
 import json
-import os
 
 import asyncpg
 from asyncpg import Connection
