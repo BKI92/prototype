@@ -4,10 +4,11 @@
 - docker pull postgres
 - docker run -e POSTGRES_PASSWORD=postgres -e POSTGRES_USER=postgres --name=pgsql -d -p 5432:5432 postgres
 - docker pull redis
-- docker run redis
+- docker run -p 6379:6379 -d redis
+
 
 ## Later you must go in docker container with redis and set up password
-In container: 
+In redis container: 
 - redis-cli
 - AUTH default password
 
@@ -19,6 +20,8 @@ In container:
 - python -m task_manager.main
 - python -m instead_of_ml.main
 - python -m responder.main
+
+## After this steps you may send messages to your telegram bot
 
 
 
