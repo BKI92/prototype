@@ -1,4 +1,5 @@
 import json
+import os
 
 import asyncpg
 from asyncpg import Connection
@@ -25,3 +26,7 @@ async def get_db_conn() -> Connection:
     except ConnectionRefusedError:
         logger.critical('Cannot connect to database')
         exit(2)
+
+    except Exception as e:
+        logger.critical(e)
+        exit(3)

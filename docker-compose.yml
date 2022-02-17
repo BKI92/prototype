@@ -9,7 +9,7 @@ services:
       - POSTGRES_PASSWORD=postgres
     image: 'postgres:12.4'
     ports:
-      - '127.0.0.1:5432:5432'
+      - '0.0.0.0:5432:5432'
     volumes:
       - 'pgdata:/var/lib/postgresql/data/'
 
@@ -17,7 +17,7 @@ services:
     container_name: 'redis'
     image: 'redis:3.2.0'
     ports:
-      - '127.0.0.1:6379:6379'
+      - '0.0.0.0:6379:6379'
     volumes:
       - 'redisdata:/data'
   web:
@@ -33,7 +33,7 @@ services:
       - REDIS_URL=redis://0.0.0.0
       - REDIS_USERNAME=default
       - REDIS_PASSWORD=reddis
-    command: /bin/sh -c 'python -m scripts.migrate'; /bin/sh -c 'python -m task_manager.main
+    command: /bin/sh -c 'python -m scripts.migrate';
     volumes:
       - ./prototype:/code/prototype
 

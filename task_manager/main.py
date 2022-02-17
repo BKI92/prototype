@@ -84,7 +84,6 @@ async def create_task(msg: types.Message):
         await msgs_repo.create(message)
         task_key = f'{user_pk}_{int(time.time())}'
         await redis.set(task_key, json.dumps({'user_pk': user_pk, 'text': text, 'cel_pk': cel_pk}))
-        # await bot.send_message(msg.from_user.id, str(int(time.time())))
         logger.info(f'Task key={task_key} successfully created')
     except DbFkError:
         logger.debug('Error in celebrity fk key')
