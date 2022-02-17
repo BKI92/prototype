@@ -1,4 +1,4 @@
-# Visual scheme https://miro.com/app/board/uXjVOMrB_1o=/
+# Visual scheme https://miro.com/app/board/uXjVOMrB_1o=/?invite_link_id=561995038645
 
 ## For local testing you must start redis service and postgres service
 - docker pull postgres
