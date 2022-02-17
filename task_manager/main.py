@@ -91,7 +91,6 @@ async def echo_message(msg: types.Message):
     finally:
         await conn.close()
         await redis.close()
-        # await redis.wait_closed()
 
 
 if __name__ == '__main__':

@@ -22,8 +22,11 @@ async def main() -> None:
                 await redis.delete(key)
                 await redis2.set(key, 'SUCCESS')
                 logger.info(f'Task key={key} successfully completed')
-            except Exception:
+            except Exception as e:
+                logger.error(e)
                 await redis.set(key, value)
+        await redis.close()
+        await redis2.close()
 
 if __name__ == '__main__':
     asyncio.get_event_loop().run_until_complete(main())
