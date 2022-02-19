@@ -29,12 +29,6 @@ services:
       - 8000
     env_file:
       - ./.env
-    environment:
-      - BOT_TOKEN=5134459296:AAGKH7IaGN_Pupq_xVnmoKH-ShzmsTe_A5w
-      - PG_DATABASE_URL=postgres://postgres:postgres@172.17.0.1
-      - REDIS_URL=redis://redis:6379
-      - REDIS_USERNAME=default
-      - REDIS_PASSWORD=reddis
     command: /bin/sh -c 'python -m scripts.migrate';'python -m task_manager.main';
     volumes:
       - ./prototype:/code/prototype
@@ -43,3 +37,5 @@ volumes:
   pgdata:
   redisdata:
 
+
+# python -m instead_of_ml.main && python -m responder.main
