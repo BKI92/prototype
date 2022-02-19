@@ -23,7 +23,7 @@ async def get_db_conn() -> Connection:
         return conn
 
     except ConnectionRefusedError:
-        logger.critical('Cannot connect to database')
+        logger.critical(f'Cannot connect to database on url={PG_DATABASE_URL}')
         exit(2)
 
     except Exception as e:
