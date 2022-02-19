@@ -1,4 +1,4 @@
-version: '3.4'
+version: '3.5'
 
 services:
 
@@ -15,29 +15,31 @@ services:
 
   redis:
     container_name: 'redis'
-    image: 'redis:3.2.0'
+    image: 'redis:latest'
     ports:
-      - '0.0.0.0:6379:6379'
+      - "0.0.0.0:6379:6379"
     volumes:
       - 'redisdata:/data'
-#    command: /bin/sh -c 'redis-cli AUTH default password';
   web:
     build: .
     depends_on:
       - postgres
       - redis
+    expose:
+      - 8000
     env_file:
       - ./.env
     environment:
       - BOT_TOKEN=5134459296:AAGKH7IaGN_Pupq_xVnmoKH-ShzmsTe_A5w
-      - PG_DATABASE_URL=postgres://postgres:postgres@0.0.0.0
-      - REDIS_URL=redis://0.0.0.0
+      - PG_DATABASE_URL=postgres://postgres:postgres@172.17.0.1
+      - REDIS_URL=redis://redis:6379
       - REDIS_USERNAME=default
       - REDIS_PASSWORD=reddis
-    command: /bin/sh -c 'python -m scripts.migrate';
+    command: /bin/sh -c 'python -m scripts.migrate';'python -m task_manager.main';
     volumes:
       - ./prototype:/code/prototype
 
 volumes:
   pgdata:
   redisdata:
+
