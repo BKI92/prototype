@@ -8,6 +8,11 @@ In the prototype, they are all in the same docker container
 - `docker exec -it prototype_web_1 /bin/sh -c 'python -m instead_of_ml.main'`
 - `docker exec -it prototype_web_1 /bin/sh -c 'python -m responder.main'`
 ## After this steps you may send messages to your telegram bot
+commands:
+- /start - to start using bot
+- /cel to see list of available celebrities
+- /help - to see format, how send messages  
+
 
 
 
