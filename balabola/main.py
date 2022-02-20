@@ -20,15 +20,17 @@ async def main() -> None:
         keys = [i.decode("utf8") for i in await redis.keys()]
         keys = sorted(keys, key=lambda i: i.split('_')[-1], reverse=False)
         for key in keys:
-            value = await redis.get(key)
-            value = json.loads(value).get('text', '')
             try:
+                value = await redis.get(key)
                 await redis.delete(key)
-                message = await balaboba(value) or 'Empty'
+                value = json.loads(value)
+                text, cel_pk = value.get('text', ''), value.get('cel_pk', '')
+                logger.debug(f'{value}')
+                message = await balaboba(text, intro=cel_pk) or 'Empty'
                 await redis2.set(key, message)
                 logger.info(f'Task key={key} successfully completed')
             except Exception as e:
-                logger.error(e)
+                logger.error(f'{e}, {key}')
                 await redis.set(key, value)
         await redis.close()
         await redis2.close()
