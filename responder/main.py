@@ -1,7 +1,7 @@
 import aioredis
 import asyncio
 
-from aiogram import Bot, Dispatcher, types
+from aiogram import Bot, Dispatcher
 from loguru import logger
 
 from config import REDIS_URL, REDIS_USERNAME, REDIS_PASSWORD, BOT_TOKEN
@@ -28,11 +28,14 @@ async def main() -> None:
             try:
                 await redis.delete(key)
                 tg_id = users_lookup.get(int(key.split('_')[0]))
-                await bot.send_message(tg_id, f'Task with key={key}, successfully completed')
-                logger.info(f'Task key={key} successfully sent')
+                logger.info(f'TG ID = {tg_id}')
+                await bot.send_message(tg_id, value.decode('utf-8'))
+                logger.info(f'Task key={key} successfully sent. {value.decode("utf-8")}')
             except Exception as e:
                 logger.error(e)
                 await redis.set(key, value)
+        await redis.close()
 
 if __name__ == '__main__':
+    logger.info('Start responder')
     asyncio.get_event_loop().run_until_complete(main())
