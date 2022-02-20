@@ -13,7 +13,7 @@ commands:
 - /cel to see list of available celebrities
 - /help - to see format, how send messages
 
-Balabola handles one message about 3-10 seconds, you can turn it off if you want 
+Balabola (https://yandex.ru/lab/yalm) handles one message about 3-10 seconds, you can turn it off if you want 
 and send to user default answer
 
 
